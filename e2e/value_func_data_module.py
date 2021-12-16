@@ -25,6 +25,8 @@ class E2EDataSet(Dataset):
       type_dir = Path(data_path, sub_type)
       if type_dir.exists:
         for subject_path in type_dir.iterdir():
+          if not 'sub' in str(subject_path):
+            continue
           subject: ValueFuncSubject = pickle.load(open(subject_path, 'rb'))
           if str(int(subject.name)) in sub_to_md:
             res.extend([(subject.name, indices, sub_type) for indices in subject.indices_list[:18]])
